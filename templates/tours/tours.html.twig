@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tours | Vérité Voyages{% endblock %}
+
+{% block body %}
+
+<section class="relative h-[50vh] bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1601045962634-44aebd08c6b4');">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 flex items-center justify-center h-full text-center text-white px-6">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Tours</h1>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">
+                Explore Tunisia with our expertly crafted desert, cultural, and coastal tours.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+    {% set tours = [
+        {name:'Sahara Adventure', desc:'Camel rides, desert camps, and unforgettable sunsets.', img:'https://images.unsplash.com/photo-1501785888041-af3ef285b470'},
+        {name:'Djerba Relaxation', desc:'Beaches, island culture, and Mediterranean vibes.', img:'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1'},
+        {name:'Cultural Tunisia', desc:'Historic cities, markets, and UNESCO heritage sites.', img:'https://images.unsplash.com/photo-1603112573391-50fa7c67f2ef'}
+    ] %}
+
+    {% for tour in tours %}
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+        <div class="relative h-64 overflow-hidden">
+            <img src="{{ tour.img }}" alt="{{ tour.name }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+        </div>
+        <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2">{{ tour.name }}</h3>
+            <p class="text-gray-600 mb-4">{{ tour.desc }}</p>
+            <a href="#" class="text-teal-600 font-semibold hover:underline">Learn More →</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

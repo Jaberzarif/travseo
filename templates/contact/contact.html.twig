@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact | Vérité Voyages{% endblock %}
+
+{% block body %}
+
+<!-- HERO -->
+<section class="relative h-[50vh] bg-gradient-to-r from-teal-600 to-teal-400 flex items-center justify-center text-center text-white">
+    <div class="px-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 animate-fadeIn">
+            Get in Touch
+        </h1>
+        <p class="text-lg max-w-2xl mx-auto animate-fadeIn delay-200">
+            Have questions or want to plan your dream trip to Tunisia? We're here to help!
+        </p>
+    </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
+
+        <!-- FORM -->
+        <div class="bg-white rounded-3xl shadow-xl p-10 animate-slideInLeft">
+            <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
+            <p class="text-gray-600 mb-8">
+                Fill out the form and our travel experts will contact you as soon as possible.
+            </p>
+
+            <form action="#" method="POST" class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 mb-2">Name</label>
+                    <input type="text" name="name" class="w-full border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-teal-400 focus:outline-none" placeholder="Your Name" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" name="email" class="w-full border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-teal-400 focus:outline-none" placeholder="you@example.com" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Message</label>
+                    <textarea name="message" rows="5" class="w-full border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-teal-400 focus:outline-none" placeholder="Write your message..." required></textarea>
+                </div>
+                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-xl transition-all transform hover:scale-105">
+                    Send Message
+                </button>
+            </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="bg-gradient-to-br from-white to-gray-100 rounded-3xl shadow-xl p-10 flex flex-col justify-between animate-slideInRight">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Our Office</h2>
+                <p class="text-gray-700 mb-4 flex items-center gap-2">📍 Djerba, Tunisia</p>
+                <p class="text-gray-700 mb-4 flex items-center gap-2">📞 +216 XX XXX XXX</p>
+                <p class="text-gray-700 mb-4 flex items-center gap-2">✉️ contact@verite-voyages.com</p>
+
+                <h3 class="text-2xl font-semibold mt-8 mb-4">Follow Us</h3>
+                <div class="flex gap-4">
+                    <a href="#" class="text-teal-600 hover:text-teal-800 text-2xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-teal-600 hover:text-teal-800 text-2xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-teal-600 hover:text-teal-800 text-2xl"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- MAP -->
+            <div class="mt-10 rounded-2xl overflow-hidden shadow-lg">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.995759434447!2d10.842572076197115!3d33.80760243060774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13aabbfcc301af65%3A0x48688f6035a304fa!2zVsOpcml0w6kgVm95YWdlcw!5e1!3m2!1sfr!2stn!4v1768990736068!5m2!1sfr!2stn" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA BOTTOM -->
+<section class="py-20 bg-teal-600 text-white text-center">
+    <h2 class="text-4xl font-bold mb-6">Ready to Start Your Adventure?</h2>
+    <p class="max-w-2xl mx-auto mb-10">Let Vérité Voyages plan your perfect Tunisian journey. Contact us now!</p>
+    <a href="#"
+       class="bg-white text-teal-600 font-semibold px-10 py-4 rounded-full hover:bg-gray-100 transition transform hover:scale-105">
+       Contact Us
+    </a>
+</section>
+
+{% endblock %}

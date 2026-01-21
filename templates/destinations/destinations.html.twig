@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destinations | Vérité Voyages{% endblock %}
+
+{% block body %}
+
+<!-- HERO -->
+<section class="relative h-[60vh] bg-cover bg-center"
+    style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada');">
+
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <div class="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
+        <div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+                Our Destinations
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-white/90">
+                Explore the most beautiful destinations in Tunisia, from the Sahara desert to the Mediterranean coast.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- INTRO -->
+<section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Travel Across Tunisia</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">
+            Vérité Voyages, based in Djerba, offers unique experiences across Tunisia.
+            Discover deserts, oases, beaches, ancient cities, and cultural treasures
+            with our expertly crafted travel packages.
+        </p>
+    </div>
+</section>
+
+<!-- DESTINATIONS GRID -->
+<section class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="grid md:grid-cols-3 gap-10">
+
+            {% set destinations = [
+                {
+                    name: 'Sahara Desert',
+                    location: 'Douz & Ksar Ghilane',
+                    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
+                    description: 'Camel rides, desert camps, golden dunes and unforgettable sunsets.'
+                },
+                {
+                    name: 'Djerba Island',
+                    location: 'Mediterranean Coast',
+                    image: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1',
+                    description: 'Crystal-clear beaches, white houses, and rich island culture.'
+                },
+                {
+                    name: 'Tozeur Oasis',
+                    location: 'South Tunisia',
+                    image: 'https://images.unsplash.com/photo-1603870271158-681ed0c456f3',
+                    description: 'Palm groves, mountain oases, and Star Wars filming locations.'
+                },
+                {
+                    name: 'Sidi Bou Said',
+                    location: 'North Tunisia',
+                    image: 'https://images.unsplash.com/photo-1603112573391-50fa7c67f2ef',
+                    description: 'Blue and white village overlooking the Mediterranean Sea.'
+                },
+                {
+                    name: 'El Djem',
+                    location: 'Central Tunisia',
+                    image: 'https://images.unsplash.com/photo-1581941019804-3fbc6f7f30a7',
+                    description: 'Home to one of the best-preserved Roman amphitheaters in the world.'
+                },
+                {
+                    name: 'Kairouan',
+                    location: 'Cultural Capital',
+                    image: 'https://images.unsplash.com/photo-1599982867554-40351c4d1f17',
+                    description: 'Historic mosques, UNESCO heritage, and spiritual atmosphere.'
+                }
+            ] %}
+
+            {% for d in destinations %}
+            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+
+                <div class="relative h-64 overflow-hidden">
+                    <img src="{{ d.image }}" alt="{{ d.name }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-black/30"></div>
+                    <span class="absolute top-4 left-4 bg-teal-500 text-white text-xs px-3 py-1 rounded-full">
+                        {{ d.location }}
+                    </span>
+                </div>
+
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2">{{ d.name }}</h3>
+                    <p class="text-gray-600 mb-6">{{ d.description }}</p>
+
+                    <a href="#"
+                       class="inline-block text-teal-600 font-semibold hover:underline">
+                        Explore →
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
+        <div>
+            <h2 class="text-4xl font-bold mb-6">
+                Authentic Travel Experiences
+            </h2>
+            <p class="text-gray-600 mb-6">
+                Our destinations are carefully selected to offer authentic experiences.
+                From desert adventures to coastal escapes, each journey is designed
+                with comfort, culture, and discovery in mind.
+            </p>
+
+            <ul class="space-y-3 text-gray-700">
+                <li>✔️ Local guides and cultural immersion</li>
+                <li>✔️ Comfortable transport & accommodations</li>
+                <li>✔️ Custom itineraries</li>
+                <li>✔️ Small group or private tours</li>
+            </ul>
+        </div>
+
+        <div class="relative">
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da"
+                 class="rounded-3xl shadow-xl">
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 bg-teal-600 text-white text-center">
+    <h2 class="text-4xl font-bold mb-6">Ready to Explore Tunisia?</h2>
+    <p class="max-w-2xl mx-auto mb-10">
+        Contact Vérité Voyages today and let us create your perfect itinerary.
+    </p>
+    <a href="#" class="bg-white text-teal-700 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition">
+        Contact Us
+    </a>
+</section>
+
+{% endblock %}
