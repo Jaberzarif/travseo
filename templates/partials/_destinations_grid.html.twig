@@ -1,0 +1,30 @@
+<div class="grid md:grid-cols-3 gap-10 mt-12">
+    {% for d in destinations %}
+        <div class="group relative overflow-hidden rounded-2xl shadow-lg">
+            <img src="{{ d.image }}"
+                 alt="{{ d.name }}"
+                 class="h-[420px] w-full object-cover group-hover:scale-110 transition duration-700">
+
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="absolute bottom-0 p-6 text-white w-full">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-2xl font-bold">{{ d.name }}</h3>
+
+                    {% if d.price %}
+                        <span class="text-xl font-semibold">{{ d.price }} $</span>
+                    {% endif %}
+                </div>
+
+                {% if d.region %}
+                    <p class="text-sm opacity-90 mt-1">{{ d.region }}</p>
+                {% endif %}
+
+                <a href="{{ path('destination_show', { slug: d.slug }) }}"
+                   class="inline-block mt-4 px-6 py-2 bg-white text-black rounded-full text-sm font-semibold hover:bg-gray-200 transition">
+                    View details →
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

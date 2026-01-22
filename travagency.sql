@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2026 at 11:59 AM
+-- Generation Time: Jan 22, 2026 at 11:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -80,6 +80,7 @@ CREATE TABLE `destinations` (
   `description` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `region` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -88,10 +89,30 @@ CREATE TABLE `destinations` (
 -- Dumping data for table `destinations`
 --
 
-INSERT INTO `destinations` (`id`, `name`, `slug`, `description`, `image`, `region`, `created_at`, `updated_at`) VALUES
-(1, 'Tozeur', 'tozeur', 'Oasis city with desert landscapes.', 'https://images.unsplash.com/photo-tozeur', 'South Tunisia', '2026-01-21 11:49:20', '2026-01-21 11:49:20'),
-(2, 'Djerba', 'djerba', 'Beautiful island with beaches and culture.', 'https://images.unsplash.com/photo-djerba', 'South Tunisia', '2026-01-21 11:49:20', '2026-01-21 11:49:20'),
-(3, 'Tunis', 'tunis', 'Capital city with historic medina.', 'https://images.unsplash.com/photo-tunis', 'North Tunisia', '2026-01-21 11:49:20', '2026-01-21 11:49:20');
+INSERT INTO `destinations` (`id`, `name`, `slug`, `description`, `image`, `region`, `price`, `created_at`, `updated_at`) VALUES
+(1, 'Tozeur', 'tozeur', 'Oasis city with desert landscapes.', 'https://diarhabibi.com/img/14804281.jpg', 'Tozeur', 450.00, '2026-01-21 11:49:20', '2026-01-22 10:45:07'),
+(2, 'Djerba', 'djerba', 'Beautiful island with beaches and culture.', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/77/63/9b/robinson-club-djerba.jpg', 'Djerba', 350.00, '2026-01-21 11:49:20', '2026-01-22 10:45:11'),
+(3, 'Tunis', 'tunis', 'Capital city with historic medina.', 'https://www.airvacances.fr/wp-content/uploads/2022/12/sidi-bou-said.jpg', 'Tunis', 400.00, '2026-01-21 11:49:20', '2026-01-22 10:45:15'),
+(4, 'Sahara Tozeur', 'sahara-tozeur', 'Explore the magical Sahara desert in Tozeur with camel rides, oasis visits, and unforgettable sunsets.', 'https://admin.relaxingtravel.tn/file_manager/source/photos/tunisie/Tozeur/anantara/8.jpg', 'Tozeur', 450.00, '2026-01-22 10:31:54', '2026-01-22 10:42:35'),
+(5, 'Douz Desert Experience', 'douz-desert-experience', 'Discover Douz, the gateway to the Sahara, with 4x4 adventures, sand dunes, and desert camps.', 'https://media.tacdn.com/media/attractions-splice-spp-674x446/13/e0/94/1c.jpg', 'Douz', 380.00, '2026-01-22 10:31:54', '2026-01-22 10:47:07'),
+(6, 'Djerba Island Escape', 'djerba-island-escape', 'Relax on the beautiful island of Djerba with sandy beaches, traditional villages, and cultural heritage.', 'https://www.revigorate.com/images/galerie-fatma-djerba.jpg', 'Djerba', 320.00, '2026-01-22 10:31:54', '2026-01-22 10:46:48'),
+(7, 'Tataouine & Ksour Tour', 'tataouine-ksour-tour', 'Visit the famous ksour of Tataouine and explore ancient Berber architecture and desert landscapes.', 'https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea', 'Tataouine', 290.00, '2026-01-22 10:31:54', '2026-01-22 10:31:54'),
+(8, 'Kairouan Spiritual Journey', 'kairouan-spiritual-journey', 'Experience the spiritual heart of Tunisia with visits to the Great Mosque and historic medina.', 'https://images.unsplash.com/photo-1600703136783-bdb5ea7d3e30', 'Kairouan', 180.00, '2026-01-22 10:31:54', '2026-01-22 10:31:54'),
+(9, 'Sidi Bou Said Getaway', 'sidi-bou-said-getaway', 'Wander through the blue and white streets of Sidi Bou Said overlooking the Mediterranean Sea.', 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee', 'Tunis', 160.00, '2026-01-22 10:31:54', '2026-01-22 10:45:51'),
+(10, 'Matmata Berber Homes', 'matmata-berber-homes', 'Explore the underground Berber houses of Matmata and discover traditional desert life.', 'https://images.unsplash.com/photo-1596394516093-501ba68a0c7b', 'Tataouine', 220.00, '2026-01-22 10:31:54', '2026-01-22 10:46:02'),
+(11, 'El Djem Amphitheatre Tour', 'el-djem-amphitheatre-tour', 'Visit the impressive Roman amphitheatre of El Djem, a UNESCO World Heritage site.', 'https://images.unsplash.com/photo-1618220179428-22790b461013', 'Mahdia', 140.00, '2026-01-22 10:31:54', '2026-01-22 10:46:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctrine_migration_versions`
+--
+
+CREATE TABLE `doctrine_migration_versions` (
+  `version` varchar(191) NOT NULL,
+  `executed_at` datetime DEFAULT NULL,
+  `execution_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -248,6 +269,12 @@ ALTER TABLE `destinations`
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
+-- Indexes for table `doctrine_migration_versions`
+--
+ALTER TABLE `doctrine_migration_versions`
+  ADD PRIMARY KEY (`version`);
+
+--
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
@@ -305,7 +332,7 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `destinations`
 --
 ALTER TABLE `destinations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `images`

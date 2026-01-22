@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<!-- HERO -->
+<section class="relative h-[80vh]">
+    <img src="{{ destination.image }}"
+         alt="{{ destination.name }}"
+         class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <div class="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
+        <div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4">
+                {{ destination.name }}
+            </h1>
+
+            {% if destination.region %}
+                <p class="text-xl opacity-90">
+                    {{ destination.region }}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+
+        <!-- DESCRIPTION -->
+        <div class="md:col-span-2">
+            <h2 class="text-3xl font-bold mb-6">
+                About this destination
+            </h2>
+
+            <p class="text-gray-700 leading-relaxed text-lg">
+                {{ destination.description }}
+            </p>
+        </div>
+
+        <!-- MODERN INFO & BOOKING CARD -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 relative overflow-hidden">
+            <!-- Decorative gradient circle -->
+            <div class="absolute -top-16 -right-16 w-40 h-40 bg-indigo-100 rounded-full mix-blend-multiply opacity-40 animate-pulse"></div>
+
+            <h3 class="text-2xl font-extrabold mb-6 border-b-2 border-indigo-200 pb-2 flex items-center">
+                <svg class="w-6 h-6 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Travel Information
+            </h3>
+
+            {% if destination.price %}
+                <p class="mb-4 text-gray-700">
+                    <span class="font-semibold">Price per person:</span>
+                    <span class="text-2xl font-bold text-indigo-600">{{ destination.price }} $</span>
+                </p>
+            {% endif %}
+
+            {% if destination.region %}
+                <p class="mb-6 text-gray-600 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a5 5 0 00-10 0v2m0 4v4a2 2 0 002 2h4a2 2 0 002-2v-4" />
+                    </svg>
+                    <span class="font-semibold">Region:</span> {{ destination.region }}
+                </p>
+            {% endif %}
+
+            <h4 class="text-xl font-semibold mb-4 text-indigo-700">Book Your Trip</h4>
+
+            <!-- Form with rounded inputs and focus effects -->
+            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+                {{ form_row(form.fullName, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
+                {{ form_row(form.email, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
+                {{ form_row(form.people, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
+                {{ form_row(form.date, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
+                {{ form_row(form.message, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
+                {{ form_row(form.submit, {'attr': {'class': 'w-full bg-indigo-600 text-white py-3 rounded-full hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg'}}) }}
+            {{ form_end(form) }}
+
+            {% for message in app.flashes('success') %}
+                <div class="mt-4 p-4 bg-green-100 text-green-800 rounded-lg shadow-inner animate-fadeIn">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Optional Tailwind animation for flashes -->
+        <style>
+            @keyframes fadeIn {
+                0% { opacity: 0; transform: translateY(-10px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fadeIn { animation: fadeIn 0.5s ease forwards; }
+        </style>
+    </div>
+</section>
+
+{% endblock %}
