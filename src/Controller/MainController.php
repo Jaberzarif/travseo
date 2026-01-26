@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Service\Seo;
 use App\Entity\Destination;
 use App\Entity\Booking;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(EntityManagerInterface $em, Seo $seo, Request $request): Response
     {
-        $limit = 6; // initial load
+        $limit = 6;
         $offset = $request->query->getInt('offset', 0); // used for "Load more"
 
         $destinations = $em->getRepository(Destination::class)->findBy(
@@ -52,10 +53,24 @@ class MainController extends AbstractController
 
 
     #[Route('/destinations', name: 'destinations')]
-    public function destinations(EntityManagerInterface $em, Seo $seo): Response
+    public function destinations(EntityManagerInterface $em, Seo $seo, Request $request): Response
     {
-        // Fetch all destinations from database
-        $destinations = $em->getRepository(Destination::class)->findAll();
+        $limit = 9;
+        $offset = $request->query->getInt('offset', 0); // used for "Load more"
+
+        $destinations = $em->getRepository(Destination::class)->findBy(
+            [],
+            ['id' => 'ASC'],
+            $limit,
+            $offset
+        );
+
+        // Detect AJAX request
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('partials/_destinations_grid.html.twig', [
+                'destinations' => $destinations
+            ]);
+        }
         return $this->render('destinations/destinations.html.twig', [
             'destinations' => $destinations,
             'seo' => $seo->destinations(),
@@ -91,39 +106,65 @@ class MainController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/destinations/{slug}', name: 'destination_show')]
-    public function show(string $slug, EntityManagerInterface $em, Request $request, Seo $seo): Response
+
+    #[Route('/login', name: 'app_login')]
+    public function login(Seo $seo): Response
     {
+        return $this->render('security/login.html.twig', [
+            'seo' => $seo->login(),
+        ]);
+    }
+
+
+
+    #[Route('/destinations/{slug}', name: 'destination_show')]
+    public function show(
+        string $slug,
+        EntityManagerInterface $em,
+        Request $request,
+        Seo $seo
+    ): Response {
+        // Fetch the destination by slug
         $destination = $em->getRepository(Destination::class)->findOneBy(['slug' => $slug]);
 
         if (!$destination) {
             throw $this->createNotFoundException('Destination not found');
         }
 
+        $user = $this->getUser(); // Get current logged-in user
+
+        // Create a new booking object
         $booking = new Booking();
+        $booking->setDestination($destination);
+
+        // Build the booking form
         $form = $this->createFormBuilder($booking)
-            ->add('fullName', TextType::class, ['label' => 'Full Name'])
-            ->add('email', EmailType::class)
-            ->add('people', IntegerType::class, ['label' => 'Number of People', 'attr' => ['min' => 1]])
+            ->add('people', IntegerType::class, [
+                'label' => 'Number of People',
+                'attr' => ['min' => 1]
+            ])
             ->add('date', DateType::class, ['widget' => 'single_text'])
             ->add('message', TextareaType::class, ['required' => false])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Book Now',
-                'attr' => [
-                    'class' => 'bg-indigo-600 text-white py-2 px-6 rounded-full hover:bg-indigo-700'
-                ]
-            ])
             ->getForm();
 
         $form->handleRequest($request);
 
+        // Form submission
         if ($form->isSubmitted() && $form->isValid()) {
-            $booking->setDestination($destination);
+            // Check if user is logged in
+            if (!$user) {
+                $this->addFlash('warning', 'You must be logged in to make a booking.');
+                return $this->redirectToRoute('app_login');
+            }
+
+            // Set booking details
+            $booking->setUser($user); // Assign current user
             $booking->setPrice($destination->getPrice() * $booking->getPeople());
+
             $em->persist($booking);
             $em->flush();
 
-            $this->addFlash('success', 'Your booking has been received!');
+            $this->addFlash('success', 'Booking successful!');
             return $this->redirectToRoute('destination_show', ['slug' => $slug]);
         }
 

@@ -91,6 +91,23 @@ class Seo
         return $this;
     }
 
+
+     // Contact page
+    public function login(): self
+    {
+        $this->title = 'Login Dream Tours | Djerba, Tunisia';
+        $this->description = 'Login in Dream Tours to plan your trips across Tunisia. Sahara, oases, beaches, and tailor-made travel.';
+        $this->canonical = 'https://www.dream-tours.com/login';
+
+        $this->ogTitle = $this->title;
+        $this->ogDescription = $this->description;
+        $this->ogUrl = $this->canonical;
+        $this->ogType = 'website';
+        $this->ogImage = '/images/login.jpg';
+
+        return $this;
+    }
+
     // Helper: Get current URL
     public function getCurrentUrl(): string
     {

@@ -27,7 +27,7 @@
 
 <!-- CONTENT -->
 <section class="py-20 bg-gray-50">
-    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12">
 
         <!-- DESCRIPTION -->
         <div class="md:col-span-2">
@@ -68,23 +68,98 @@
                 </p>
             {% endif %}
 
-            <h4 class="text-xl font-semibold mb-4 text-indigo-700">Book Your Trip</h4>
+            <!-- BOOKING FORM CARD -->
+            <div class="relative bg-white/90 rounded-3xl p-1">
 
-            <!-- Form with rounded inputs and focus effects -->
-            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
-                {{ form_row(form.fullName, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
-                {{ form_row(form.email, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
-                {{ form_row(form.people, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
-                {{ form_row(form.date, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
-                {{ form_row(form.message, {'attr': {'class': 'w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-100'}}) }}
-                {{ form_row(form.submit, {'attr': {'class': 'w-full bg-indigo-600 text-white py-3 rounded-full hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg'}}) }}
-            {{ form_end(form) }}
+                <h3 class="text-2xl font-bold mb-2 text-gray-900">
+                    Book this experience
+                </h3>
+                <p class="text-gray-500 mb-6 text-sm">
+                    Secure your spot in just a few clicks ✨
+                </p>
 
-            {% for message in app.flashes('success') %}
-                <div class="mt-4 p-4 bg-green-100 text-green-800 rounded-lg shadow-inner animate-fadeIn">
-                    {{ message }}
+                {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+                {% if app.user %}
+                    <!-- Display user info, read-only -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
+                        <input type="text" value="{{ app.user.fullName }}" disabled
+                            class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 bg-gray-100">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email address</label>
+                        <input type="email" value="{{ app.user.email }}" disabled
+                            class="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 bg-gray-100">
+                    </div>
+                {% else %}
+                    <div class="text-red-600 font-medium">
+                        You must be logged in to book this experience.
+                    </div>
+                {% endif %}
+
+                <!-- People -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">
+                        Number of people
+                    </label>
+                    {{ form_widget(form.people, {
+                        attr: {
+                            class: 'w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300',
+                            min: 1
+                        }
+                    }) }}
                 </div>
-            {% endfor %}
+
+                <!-- Date -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">
+                        Preferred date
+                    </label>
+                    {{ form_widget(form.date, {
+                        attr: {
+                            class: 'w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300'
+                        }
+                    }) }}
+                </div>
+
+                <!-- Message -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">
+                        Special request (optional)
+                    </label>
+                    {{ form_widget(form.message, {
+                        attr: {
+                            rows: 4,
+                            class: 'w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 resize-none'
+                        }
+                    }) }}
+                </div>
+
+                {% if app.user %}
+                    <button type="submit"
+                            class="group relative w-full overflow-hidden rounded-full bg-indigo-600 py-4 font-semibold text-white text-lg transition-all duration-300 hover:bg-indigo-700 hover:shadow-xl hover:-translate-y-0.5">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            Book now
+                            <span class="transition-transform group-hover:translate-x-1">→</span>
+                        </span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition"></span>
+                    </button>
+                {% endif %}
+
+                {{ form_end(form) }}
+
+                <!-- Success flash -->
+                {% for message in app.flashes('success') %}
+                    <div class="mt-6 rounded-xl bg-green-100 px-4 py-3 text-green-800 text-sm">
+                        ✅ {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
         </div>
 
         <!-- Optional Tailwind animation for flashes -->

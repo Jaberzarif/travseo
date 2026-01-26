@@ -38,73 +38,42 @@
 <section class="py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
 
-        <div class="grid md:grid-cols-3 gap-10">
 
-            {% set destinations = [
-                {
-                    name: 'Sahara Desert',
-                    location: 'Douz & Ksar Ghilane',
-                    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
-                    description: 'Camel rides, desert camps, golden dunes and unforgettable sunsets.'
-                },
-                {
-                    name: 'Djerba Island',
-                    location: 'Mediterranean Coast',
-                    image: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1',
-                    description: 'Crystal-clear beaches, white houses, and rich island culture.'
-                },
-                {
-                    name: 'Tozeur Oasis',
-                    location: 'South Tunisia',
-                    image: 'https://images.unsplash.com/photo-1603870271158-681ed0c456f3',
-                    description: 'Palm groves, mountain oases, and Star Wars filming locations.'
-                },
-                {
-                    name: 'Sidi Bou Said',
-                    location: 'North Tunisia',
-                    image: 'https://images.unsplash.com/photo-1603112573391-50fa7c67f2ef',
-                    description: 'Blue and white village overlooking the Mediterranean Sea.'
-                },
-                {
-                    name: 'El Djem',
-                    location: 'Central Tunisia',
-                    image: 'https://images.unsplash.com/photo-1581941019804-3fbc6f7f30a7',
-                    description: 'Home to one of the best-preserved Roman amphitheaters in the world.'
-                },
-                {
-                    name: 'Kairouan',
-                    location: 'Cultural Capital',
-                    image: 'https://images.unsplash.com/photo-1599982867554-40351c4d1f17',
-                    description: 'Historic mosques, UNESCO heritage, and spiritual atmosphere.'
-                }
-            ] %}
 
-            {% for d in destinations %}
-            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-
-                <div class="relative h-64 overflow-hidden">
-                    <img src="{{ d.image }}" alt="{{ d.name }}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-black/30"></div>
-                    <span class="absolute top-4 left-4 bg-teal-500 text-white text-xs px-3 py-1 rounded-full">
-                        {{ d.location }}
-                    </span>
-                </div>
-
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">{{ d.name }}</h3>
-                    <p class="text-gray-600 mb-6">{{ d.description }}</p>
-
-                    <a href="#"
-                       class="inline-block text-teal-600 font-semibold hover:underline">
-                        Explore →
-                    </a>
-                </div>
-
-            </div>
-            {% endfor %}
-
+        <div id="destinations-grid">
+            {% include 'partials/_destinations_grid.html.twig' %}
         </div>
+
+        <div class="text-center mt-12">
+            <button id="load-more" class="inline-block px-8 py-3 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition cursor-pointer">
+                Load More
+            </button>
+        </div>
+
+        <script>
+            let offset = {{ destinations|length }};
+            const loadMoreBtn = document.getElementById('load-more');
+
+            loadMoreBtn.addEventListener('click', () => {
+                fetch(`/?offset=${offset}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                    .then(response => response.text())
+                    .then(html => {
+                        const container = document.getElementById('destinations-grid');
+                        container.insertAdjacentHTML('beforeend', html);
+
+                        // update offset
+                        offset += 6;
+
+                        // optional: hide button if no more destinations
+                        if (html.trim() === '') {
+                            loadMoreBtn.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error(error));
+            });
+        </script>
+
+
     </div>
 </section>
 
