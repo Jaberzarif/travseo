@@ -18,10 +18,36 @@
     <meta name="twitter:title" content="{{ seo.ogTitle }}">
     <meta name="twitter:description" content="{{ seo.ogDescription }}">
     <meta name="twitter:image" content="{{ seo.ogImage }}">
-</head>
     {% block stylesheet %}
             <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
      {% endblock %}
+
+     {% if seo is defined %}
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Verite Voyages",
+    "url": "https://verite-voyages.com",
+    "logo": "https://verite-voyages.com/img/logo.png",
+    "image": "https://verite-voyages.com/img/slide_hero.jpg",
+    "description": "Travel agency in Tunisia offering Sahara tours, excursions, and tailor-made trips from Djerba.",
+    "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TN"
+    },
+    "areaServed": {
+        "@type": "Country",
+        "name": "Tunisia"
+    },
+    "sameAs": [
+        "https://www.facebook.com/veritevoyagestunisia",
+        "https://www.instagram.com/excursion_verite_voyages"
+    ]
+    }
+    </script>
+    {% endif %}
+
 </head>
 
 <body>
